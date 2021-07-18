@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useSelector } from "react-redux";
+import { State } from "./actions/actionTypes";
+import Form from "./components/Form";
+import "./App.css";
 
-function App() {
+const App = () => {
+  const pokemon = useSelector((state: { pokemon: State }) => state.pokemon);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="root">
+      <Form />
+      <div className="pokemon-details">
+        <div className="error-message">{pokemon.error}</div>
+        {pokemon.data ? (
+          <div>
+            Name: {pokemon.data?.name}
+            <br />
+            Weight: {pokemon.data?.weight}
+            <br />
+            Height: {pokemon.data?.height}
+            <br />
+            Experience: {pokemon.data?.exp}
+          </div>
+        ) : null}
+      </div>
     </div>
   );
-}
+};
 
 export default App;
